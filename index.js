@@ -15,7 +15,7 @@ var dy = -2;
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "red";
     ctx.fill();
     ctx.closePath();
 }
@@ -23,7 +23,7 @@ function drawBall() {
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "red";
     ctx.fill();
     ctx.closePath();
 }
@@ -37,8 +37,18 @@ function draw() {
     dx = -dx;
 }
 
-if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+if(y + dy <  ballRadius){
     dy = -dy;
+} else if(y + dy > canvas.height-ballRadius){
+if(x > paddleX && x  < paddleX + paddleWidth){
+    dy = -dy;
+}
+else {
+    alert("YOU SUCK !!!!");
+    document.location.reload();
+    clearInterval(interval);
+}
+
 }
 
 if(rightPressed) {
@@ -77,7 +87,7 @@ function keyUpHandler(e) {
     else if(e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = false;
     }
-}
+}                   
 
 
-setInterval(draw, 10);
+var interval = setInterval(draw, 10);
